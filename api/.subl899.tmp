@@ -1,0 +1,51 @@
+var plugin = {},
+	common = require('../../../api/utils/common.js'),
+    plugins = require('../../pluginManager.js'),
+	fetch = require('../../../api/parts/data/fetch.js');
+
+(function (plugin) {
+	var now = Math.round(new Date().getTime()/1000);
+
+	plugins.register("/", function(ob){
+		common.db.collection('tod').insert({ts: now, hello: "hello"}, function(){}); 
+	}); 
+
+	plugins.register("/i", function(ob){
+		common.db.collection('tod').insert({ts: now, hello: "hello i"}, function(){}); 
+	}); 
+
+	plugins.register("/session/begin", function(ob){
+
+		//console.log(ob.params.req); 
+		var timeStamp  = ob.params.qstring.timestamp; 
+		var timeBucket = (new Date(timeStamp * 1000)).getHours(); 
+		var appKey     = ob.params.qstring.app_key; 
+
+		common.db.collection('apps').findOne({key: appKey}, function(err, app){
+			if( err ){
+				return console.log(err); 
+			}
+
+			common.db.collection('tod').insert({
+				ts: timeStamp 
+			   ,tb: timeBucket 
+			   ,hello: "hello session"
+			   ,app_user_id: ob.params.app_user_id
+			   ,app_key: appKey
+			   ,app_id: app._id
+			}, function(){});
+
+		})
+ 
+	}); 
+
+
+
+	plugins.register("/o", function(ob){
+		common.db.collection('tod').insert({ts: now, hello: "hello o"}, function(){}); 
+	}); 
+
+
+}(plugin));
+
+module.exports = plugin;

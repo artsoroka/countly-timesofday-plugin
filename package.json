@@ -1,0 +1,26 @@
+{
+  "name": "countly-timesofday",
+  "title": "Times of day",
+  "version": "0.1.0",
+  "description": "Filtering requests by time of a day",
+  "author": "Count.ly",
+  "homepage": "https://count.ly/marketplace/",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/Countly/countly-server.git"
+  },
+  "bugs": {
+    "url": "http://github.com/Countly/countly-server/issues"
+  },
+  "keywords": [
+    "countly",
+    "analytics",
+    "mobile",
+    "screen",
+    "times of day"
+  ],
+  "dependencies": {
+    "moment-timezone": "^0.3.1"
+  },
+  "private": true
+}
